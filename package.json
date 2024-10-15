@@ -1,0 +1,26 @@
+{
+    "scripts": {
+        "dev": "ts-node app.ts"
+    },
+    "dependencies": {
+        "@types/express": "^5.0.0",
+        "dotenv": "^16.4.5",
+        "express": "^4.21.1"
+    },
+    "devDependencies": {
+        "@types/node": "^22.7.5",
+        "ts-node": "^10.9.2",
+        "tslib": "^2.7.0",
+        "typescript": "^5.6.3"
+    },
+    "name": "karyawan-backend",
+    "version": "1.0.0",
+    "description": "a backend side of website about CRUD karyawan(employee)",
+    "main": "app.ts",
+    "keywords": [
+        "website",
+        "CRUD"
+    ],
+    "author": "arief satrio",
+    "license": "ISC"
+}

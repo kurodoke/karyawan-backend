@@ -2,13 +2,18 @@
     "scripts": {
         "dev": "ts-node app.ts"
     },
+    "prisma": {
+        "seed": "ts-node prisma/seed.ts"
+    },
     "dependencies": {
+        "@prisma/client": "^5.20.0",
         "@types/express": "^5.0.0",
         "dotenv": "^16.4.5",
         "express": "^4.21.1"
     },
     "devDependencies": {
         "@types/node": "^22.7.5",
+        "prisma": "^5.20.0",
         "ts-node": "^10.9.2",
         "tslib": "^2.7.0",
         "typescript": "^5.6.3"

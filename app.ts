@@ -1,14 +1,8 @@
-import express, { Request, Response, Express } from "express";
-import dotenv from "dotenv";
+import { app } from "./init";
+import { karyawanRouter } from "./router/karyawan";
 
-dotenv.config();
-
-const app: Express = express();
-
-app.get("/", (req: Request, res: Response) => {
-    res.send("Hello World");
-});
+app.use("/api/v1", karyawanRouter);
 
 app.listen(process.env.PORT, () => {
-    console.log(`Server Running on Port : ${process.env.PORT}`);
+    console.log(`Server Running on localhost:${process.env.PORT}`);
 });

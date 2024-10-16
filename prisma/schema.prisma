@@ -14,7 +14,7 @@ datasource db {
 }
 
 model karyawan {
-  id            BigInt   @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   nama          String
   jabatan       String
   gaji          Int

@@ -2,6 +2,26 @@ import express, { NextFunction, Request, Response } from "express";
 import { prisma } from "../init";
 import { z } from "zod";
 
+interface KaryawanBody {
+    nama: string;
+    jabatan: string;
+    gaji: number;
+    tanggal_masuk: Date;
+}
+
+const KaryawanSchema = z.object({
+    nama: z.string(),
+    jabatan: z.string(),
+    gaji: z.preprocess((arg) => {
+        if (typeof arg === "string") return parseInt(arg);
+    }, z.number()),
+    tanggal_masuk: z.preprocess((arg) => {
+        if (typeof arg === "string" || arg instanceof Date) {
+            return new Date(arg);
+        }
+    }, z.date()),
+});
+
 const router = express.Router();
 
 //middleware
@@ -34,24 +54,39 @@ router.get("/karyawan", async (req: Request, res: Response) => {
     }
 });
 
-interface KaryawanBody {
-    nama: string;
-    jabatan: string;
-    gaji: number;
-    tanggal_masuk: Date;
-}
+//get one data karyawan
+router.get("/karyawan/:id", async (req: Request, res: Response) => {
+    try {
+        const id: number = parseInt(req.params["id"]);
 
-const KaryawanSchema = z.object({
-    nama: z.string(),
-    jabatan: z.string(),
-    gaji: z.preprocess((arg) => {
-        if (typeof arg === "string") return parseInt(arg);
-    }, z.number()),
-    tanggal_masuk: z.preprocess((arg) => {
-        if (typeof arg === "string" || arg instanceof Date) {
-            return new Date(arg);
+        const result = await prisma.karyawan.findFirst({ where: { id: id } });
+
+        if (result === null) {
+            res.status(404);
+            res.send({
+                success: false,
+                error_code: 404,
+                message: "Data karyawan not found",
+                data: result,
+            });
+        } else {
+            res.status(200);
+            res.send({
+                success: true,
+                message: "Sucessfully get data of one karyawan",
+                data: result,
+            });
         }
-    }, z.date()),
+    } catch (e) {
+        console.log(e);
+        res.status(500);
+        res.send({
+            success: false,
+            error_code: 500,
+            message: "Something went wrong in the server side",
+            data: {},
+        });
+    }
 });
 
 //add one karyawan instance to database

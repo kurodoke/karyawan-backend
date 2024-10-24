@@ -53,13 +53,18 @@ const KaryawanSchema = z.object({
         }
     }, z.date()),
 });
+
 //add one karyawan instance to database
 router.post("/karyawan", async (req: Request, res: Response) => {
     try {
+        //parsing inputed data to the appropriate schema
         const data = KaryawanSchema.parse(req.body);
+
+        //store the data to database
         await prisma.karyawan.create({
             data: data,
         });
+
         res.status(201);
         res.send({
             success: true,
@@ -78,4 +83,33 @@ router.post("/karyawan", async (req: Request, res: Response) => {
     }
 });
 
+//update one data karyawan
+router.put("/karyawan/:id", async (req: Request, res: Response) => {
+    try {
+        //get id by the url
+        const id: number = parseInt(req.params["id"]);
+
+        //parsing inputed data to the appropriate schema
+        const data = KaryawanSchema.parse(req.body);
+
+        //update the data on the database
+        await prisma.karyawan.update({ where: { id: id }, data: data });
+
+        res.status(201);
+        res.send({
+            success: true,
+            message: "Sucessfully update one data of karyawan",
+            data: {},
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(500);
+        res.send({
+            success: false,
+            error_code: 500,
+            message: "Something went wrong in the server side",
+            data: {},
+        });
+    }
+});
 export const karyawanRouter = router;

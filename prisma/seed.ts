@@ -1,4 +1,5 @@
 import { prisma } from "../init";
+import crypto from "node:crypto";
 
 prisma;
 
@@ -22,6 +23,15 @@ async function main() {
             gaji: 5000000,
             jabatan: "Bawahan",
             tanggal_masuk: new Date(),
+        },
+    });
+
+    const Admin = await prisma.admin.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            email: "admin@gmail.com",
+            password: crypto.hash("sha256", "admin123"),
         },
     });
 }

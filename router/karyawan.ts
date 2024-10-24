@@ -1,6 +1,8 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Response } from "express";
 import { prisma } from "../init";
 import { z } from "zod";
+import { Request } from "../types/request";
+import { authenticateToken } from "../middleware/authenticateToken";
 
 interface KaryawanBody {
     nama: string;
@@ -31,9 +33,10 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader("Content-Type", "application/json");
     next();
 });
+router.use(authenticateToken);
 
 //get all the data of karyawan
-router.get("/karyawan", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
     try {
         const result = await prisma.karyawan.findMany();
         res.status(200);
@@ -55,7 +58,7 @@ router.get("/karyawan", async (req: Request, res: Response) => {
 });
 
 //get one data karyawan
-router.get("/karyawan/:id", async (req: Request, res: Response) => {
+router.get("/:id", async (req: Request, res: Response) => {
     try {
         const id: number = parseInt(req.params["id"]);
 
@@ -90,7 +93,7 @@ router.get("/karyawan/:id", async (req: Request, res: Response) => {
 });
 
 //add one karyawan instance to database
-router.post("/karyawan", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
     try {
         //parsing inputed data to the appropriate schema
         const data = KaryawanSchema.parse(req.body);
@@ -119,7 +122,7 @@ router.post("/karyawan", async (req: Request, res: Response) => {
 });
 
 //update one data karyawan
-router.put("/karyawan/:id", async (req: Request, res: Response) => {
+router.put("/:id", async (req: Request, res: Response) => {
     try {
         //get id by the url
         const id: number = parseInt(req.params["id"]);
@@ -149,7 +152,7 @@ router.put("/karyawan/:id", async (req: Request, res: Response) => {
 });
 
 //delete one karyawan
-router.delete("/karyawan/:id", async (req: Request, res: Response) => {
+router.delete("/:id", async (req: Request, res: Response) => {
     try {
         //get id by the url
         const id: number = parseInt(req.params["id"]);
@@ -173,4 +176,4 @@ router.delete("/karyawan/:id", async (req: Request, res: Response) => {
     }
 });
 
-export const karyawanRouter = router;
+export { router as karyawanRouter };

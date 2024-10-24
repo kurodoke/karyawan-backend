@@ -7,7 +7,6 @@ async function main() {
         where: { id: 1 },
         update: {},
         create: {
-            id: 1,
             nama: "Udin Yaeger Ayang Mikasa",
             gaji: 100000000,
             jabatan: "Pemimpin",
@@ -19,7 +18,6 @@ async function main() {
         where: { id: 2 },
         update: {},
         create: {
-            id: 2,
             nama: "Supri Gomen Amanai",
             gaji: 5000000,
             jabatan: "Bawahan",

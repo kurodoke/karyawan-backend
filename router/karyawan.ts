@@ -106,7 +106,7 @@ router.post("/", async (req: Request, res: Response) => {
         res.status(201);
         res.send({
             success: true,
-            message: "Sucessfully add create data of karyawan",
+            message: "Sucessfully create a data of karyawan",
             data: {},
         });
     } catch (e) {

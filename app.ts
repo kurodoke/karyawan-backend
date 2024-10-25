@@ -1,7 +1,9 @@
 import { app } from "./init";
 import { karyawanRouter } from "./router/karyawan";
 import { loginRouter } from "./router/login";
+import cors from "cors";
 
+app.use(cors());
 app.use("/api/v1/karyawan", karyawanRouter);
 app.use("/api/v1/auth", loginRouter);
 

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "karyawan" ALTER COLUMN "gaji" SET DATA TYPE BIGINT;

@@ -17,7 +17,7 @@ model karyawan {
   id            Int      @id @default(autoincrement())
   nama          String
   jabatan       String
-  gaji          Int
+  gaji          BigInt
   tanggal_masuk DateTime
 }
 
